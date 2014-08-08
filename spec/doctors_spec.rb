@@ -1,14 +1,23 @@
 require 'doctors_spec_helper'
 
 describe Doctor do
-  it 'should initialize doctor name and speciality' do
-    test_doctor = Doctor.new({'name' => "Dr. Who", 'specialty' => "gynecologist"})
+  it 'should initialize doctor name' do
+    test_doctor = Doctor.new({'name' => "Dr. Who"})
     expect(test_doctor).to be_an_instance_of Doctor
   end
 
   it 'lets you save a doctor to the database' do
-    test_doctor = Doctor.new({'name' => "Dr. Who", 'specialty' => "gynecologist"})
+    test_doctor = Doctor.new({'name' => "Dr. Who"})
     test_doctor.save
     expect(Doctor.all).to eq [test_doctor]
+  end
+
+  it 'should assign doctor specialty' do
+    test_doctor = Doctor.new({'name' => "Dr. Who"})
+    test_doctor.save
+    test_specialty = Specialty.new({'name' => "gynecologist"})
+    test_specialty.save
+    test_doctor.assign_specialty(test_doctor.id, test_specialty.id)
+    expect(test_doctor.specialty_id).to eq test_specialty.id
   end
 end

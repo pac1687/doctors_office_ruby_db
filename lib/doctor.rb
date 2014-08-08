@@ -1,10 +1,10 @@
 class Doctor
-  attr_reader :id, :name, :specialty
+  attr_reader :id, :name, :specialty_id
 
   def initialize(attributes)
     @id = attributes['id']
     @name = attributes['name']
-    @specialty = attributes['specialty']
+    @specialty_id = attributes['specialty_id']
   end
 
   def ==(another_doctor)
@@ -12,7 +12,7 @@ class Doctor
   end
 
   def save
-    results = DB.exec("INSERT INTO doctors (name, specialty) VALUES ('#{@name}', '#{@specialty}') RETURNING id;")
+    results = DB.exec("INSERT INTO doctors (name) VALUES ('#{@name}') RETURNING id;")
     @id = results.first['id'].to_i
   end
 
@@ -24,5 +24,10 @@ class Doctor
       doctors << new_doctor
     end
   doctors
+  end
+
+  def assign_specialty(doctor_id, specialty_id)
+    results = DB.exec("UPDATE doctors SET specialty_id = #{specialty_id} WHERE id = #{doctor_id} RETURNING specialty_id;")
+    @specialty_id = results.first['specialty_id'].to_i
   end
 end
