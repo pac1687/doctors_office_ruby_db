@@ -30,4 +30,17 @@ class Doctor
     results = DB.exec("UPDATE doctors SET specialty_id = #{specialty_id} WHERE id = #{doctor_id} RETURNING specialty_id;")
     @specialty_id = results.first['specialty_id'].to_i
   end
+
+  def self.list_doctors_by_specialty(name)
+    specialty_results = DB.exec("SELECT * FROM specialties WHERE name = '#{name}';")
+    @id = specialty_results.first['id'].to_i
+    results = DB.exec("SELECT * FROM doctors WHERE specialty_id = #{@id};")
+    doctors = []
+    results.each do |result|
+      new_doctor = Doctor.new(result)
+      doctors << new_doctor
+    end
+  doctors
+  end
+
 end
