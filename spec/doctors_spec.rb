@@ -1,4 +1,5 @@
 require 'doctors_spec_helper'
+require 'pry'
 
 describe Doctor do
   it 'should initialize doctor name' do
@@ -21,7 +22,7 @@ describe Doctor do
     expect(test_doctor.specialty_id).to eq test_specialty.id
   end
 
-  it 'lists out all the doctors in a particular speciality' do
+  it 'lists out all the doctors in a particular specialty' do
     test_doctor = Doctor.new({'name' => "Dr. Who"})
     test_doctor.save
     test_specialty = Specialty.new({'name' => "gynecologist"})
@@ -33,6 +34,18 @@ describe Doctor do
     specialty_search = "gynecologist"
     list_doctors = Doctor.list_doctors_by_specialty(specialty_search)
     expect(list_doctors).to eq [test_doctor, test_doctor1]
+  end
+
+  it 'should assign insurance company to doctor' do
+    test_doctor = Doctor.new({'name' => "Dr. Who"})
+    test_doctor.save
+    test_specialty = Specialty.new({'name' => "gynecologist"})
+    test_specialty.save
+    test_insurance = Insurance.new({'name' => "Red Shield"})
+    test_insurance.save
+    test_doctor.assign_specialty(test_doctor.id, test_specialty.id)
+    test_doctor.assign_insurance(test_doctor.id, test_insurance.id)
+    expect(test_doctor.insurance_id).to eq test_insurance.id
   end
 
 end
