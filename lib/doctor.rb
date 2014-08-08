@@ -49,4 +49,20 @@ class Doctor
   doctors
   end
 
+  def self.search_doctor(name)
+    results = DB.exec("SELECT * FROM doctors WHERE name = '#{name}';")
+    doctors = []
+    results.each do |result|
+
+      doctors << result
+    end
+    doctors
+    # binding.pry\
+  end
+
+  # def update(name)
+  #   DB.exec("UPDATE doctors SET name = '#{name}';")
+
+  # end
+
 end

@@ -48,4 +48,12 @@ describe Doctor do
     expect(test_doctor.insurance_id).to eq test_insurance.id
   end
 
+  it 'searches for a doctor by name' do
+    test_doctor = Doctor.new({'name' => "Dr. Who"})
+    test_doctor.save
+    test_search = "Dr. Who"
+    result = Doctor.search_doctor(test_search)
+    expect(result).to eq [test_doctor]
+  end
+
 end
