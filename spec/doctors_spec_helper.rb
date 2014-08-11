@@ -5,6 +5,7 @@ require 'insurance'
 require 'appointments'
 require 'pg'
 require 'pry'
+require 'time'
 
 DB = PG.connect(:dbname => 'doctors_office_test')
 

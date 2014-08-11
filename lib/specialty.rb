@@ -2,12 +2,12 @@ class Specialty
   attr_reader :id, :name
 
   def initialize(attributes)
-    @id = attributes['id']
+    @id = attributes['id'].to_i
     @name = attributes['name']
   end
 
   def ==(another_specialty)
-    self.name == another_specialty.name
+    self.name == another_specialty.name && self.id == another_specialty.id
   end
 
   def save

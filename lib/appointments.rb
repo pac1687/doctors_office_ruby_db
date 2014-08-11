@@ -1,5 +1,3 @@
-require 'time'
-
 class Appointment
   attr_reader :id, :doctor_id, :patient_id, :date, :cost
 
@@ -7,7 +5,7 @@ class Appointment
     @id = attributes['id'].to_i
     @doctor_id = attributes['doctor_id'].to_i
     @patient_id = attributes['patient_id'].to_i
-    @date = Time.new(attributes['date'])
+    @date = Time.parse(attributes['date'])
     @cost = attributes['cost'].to_i
   end
 
@@ -29,4 +27,10 @@ class Appointment
     end
     appointments
   end
+
+  def self.bill(doctor_id, date1, date2)
+    results = DB.exec("SELECT SUM(cost) FROM appointments WHERE doctor_id = #{doctor_id} AND date BETWEEN '#{date1}' AND '#{date2}';")
+    sum = results.first["sum"].to_i
+  end
+
 end

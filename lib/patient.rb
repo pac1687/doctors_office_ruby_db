@@ -2,14 +2,14 @@ class Patient
   attr_reader :id, :name, :birthday, :doctor_id
 
   def initialize(attributes)
-    @id = attributes['id']
+    @id = attributes['id'].to_i
     @name = attributes['name']
-    @birthday = Time.new(attributes['birthday'])
-    @doctor_id = attributes['doctor_id']
+    @birthday = Time.parse(attributes['birthday'])
+    @doctor_id = attributes['doctor_id'].to_i
   end
 
   def ==(another_patient)
-    self.name == another_patient.name && self.birthday == another_patient.birthday
+    self.id == another_patient.id && self.name == another_patient.name && self.birthday == another_patient.birthday && self.doctor_id == another_patient.doctor_id
   end
 
   def save

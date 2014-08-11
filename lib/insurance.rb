@@ -3,12 +3,12 @@ class Insurance
 attr_reader :id, :name
 
   def initialize(attributes)
-    @id = attributes['id']
+    @id = attributes['id'].to_i
     @name = attributes['name']
   end
 
   def ==(another_insurance)
-    self.name == another_insurance.name
+    self.name == another_insurance.name && self.id == another_insurance.id
   end
 
   def save

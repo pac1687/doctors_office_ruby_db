@@ -2,14 +2,14 @@ class Doctor
   attr_reader :id, :name, :specialty_id, :insurance_id
 
   def initialize(attributes)
-    @id = attributes['id']
+    @id = attributes['id'].to_i
     @name = attributes['name']
-    @specialty_id = attributes['specialty_id']
-    @insurance_id = attributes['insurance_id']
+    @specialty_id = attributes['specialty_id'].to_i
+    @insurance_id = attributes['insurance_id'].to_i
   end
 
   def ==(another_doctor)
-    self.name == another_doctor.name
+    self.name == another_doctor.name && self.id == another_doctor.id && self.specialty_id == another_doctor.specialty_id && self.insurance_id == another_doctor.insurance_id
   end
 
   def save
