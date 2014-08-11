@@ -48,12 +48,34 @@ describe Doctor do
     expect(test_doctor.insurance_id).to eq test_insurance.id
   end
 
-  it 'searches for a doctor by name' do
+  it 'searches for a doctor by name and returns the ID' do
     test_doctor = Doctor.new({'name' => "Dr. Who"})
     test_doctor.save
     test_search = "Dr. Who"
     result = Doctor.search_doctor(test_search)
-    expect(result).to eq [test_doctor]
+    expect(result).to eq test_doctor.id
   end
 
+  it 'updates the name of the doctor' do
+    test_doctor = Doctor.new({'name' => "Dr. Who"})
+    test_doctor.save
+    test_search = "Dr. Who"
+    test_update = "Dr. What"
+    search = Doctor.search_doctor(test_search)
+    result = Doctor.update(test_update, search)
+    expect(Doctor.all.first.name).to eq "Dr. What"
+  end
+
+  it 'returns the number of patients a doctor sees' do
+    test_doctor = Doctor.new({'name' => "Dr. Who"})
+    test_doctor.save
+    test_patient = Patient.new({'name' => "Sherlock Holmes", 'birthday' => "1999-09-09", 'doctor_id' => test_doctor.id})
+    test_patient.save
+    test_patient1 = Patient.new({'name' => "John Watson", 'birthday' => "1999-09-08", 'doctor_id' => test_doctor.id})
+    test_patient1.save
+    test_search = "Dr. Who"
+    search = Doctor.search_doctor(test_search)
+    result = Doctor.patient_count(search)
+    expect(result).to eq 2
+  end
 end

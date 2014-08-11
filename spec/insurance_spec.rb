@@ -12,4 +12,21 @@ describe Insurance do
     expect(Insurance.all).to eq [test_insurance]
   end
 
+  it 'lets you search an insurance company by name and returns the id' do
+    test_insurance = Insurance.new({'name' => "Red Shield"})
+    test_insurance.save
+    test_search = "Red Shield"
+    result = Insurance.search_insurance(test_search)
+    expect(result).to eq test_insurance.id
+  end
+
+  it 'updates the name of the patient' do
+    test_insurance = Insurance.new({'name' => "Red Shield"})
+    test_insurance.save
+    test_search = "Red Shield"
+    test_update = "Blue Cross"
+    search = Insurance.search_insurance(test_search)
+    result = Insurance.update(test_update, search)
+    expect(Insurance.all.first.name).to eq "Blue Cross"
+  end
 end

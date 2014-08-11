@@ -51,18 +51,16 @@ class Doctor
 
   def self.search_doctor(name)
     results = DB.exec("SELECT * FROM doctors WHERE name = '#{name}';")
-    doctors = []
-    results.each do |result|
-
-      doctors << result
-    end
-    doctors
-    # binding.pry\
+    @id = results.first['id'].to_i
   end
 
-  # def update(name)
-  #   DB.exec("UPDATE doctors SET name = '#{name}';")
+  def self.update(name, id)
+    DB.exec("UPDATE doctors SET name = '#{name}' WHERE id = #{id};")
+    @name = name
+  end
 
-  # end
-
+  def self.patient_count(id)
+    results = DB.exec("SELECT COUNT(doctor_id) FROM patients WHERE doctor_id = #{id};")
+    @count = results.first['count'].to_i
+  end
 end

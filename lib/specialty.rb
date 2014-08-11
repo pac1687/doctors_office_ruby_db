@@ -24,4 +24,14 @@ class Specialty
     end
   specialties
   end
+
+  def self.search_speciality(name)
+    results = DB.exec("SELECT * FROM specialties WHERE name = '#{name}';")
+    @id = results.first['id'].to_i
+  end
+
+  def self.update(name, id)
+    DB.exec("UPDATE specialties SET name = '#{name}' WHERE id = #{id};")
+    @name = name
+  end
 end

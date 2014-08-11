@@ -31,4 +31,14 @@ class Patient
     results = DB.exec("UPDATE patients SET doctor_id = #{doctor_id} WHERE id = #{patient_id} RETURNING doctor_id;")
     @doctor_id = results.first['doctor_id'].to_i
   end
+
+  def self.search_patient(name)
+    results = DB.exec("SELECT * FROM patients WHERE name = '#{name}';")
+    @id = results.first['id'].to_i
+  end
+
+  def self.update(name, id)
+    DB.exec("UPDATE patients SET name = '#{name}' WHERE id = #{id};")
+    @name = name
+  end
 end

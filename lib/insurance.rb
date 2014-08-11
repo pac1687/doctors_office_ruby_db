@@ -26,6 +26,13 @@ attr_reader :id, :name
   insurance
   end
 
+  def self.search_insurance(name)
+    results = DB.exec("SELECT * FROM insurance WHERE name = '#{name}';")
+    @id = results.first['id'].to_i
+  end
 
-
+  def self.update(name, id)
+    DB.exec("UPDATE insurance SET name = '#{name}' WHERE id = #{id};")
+    @name = name
+  end
 end
