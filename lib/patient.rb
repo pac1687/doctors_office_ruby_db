@@ -4,12 +4,12 @@ class Patient
   def initialize(attributes)
     @id = attributes['id']
     @name = attributes['name']
-    @birthday = attributes['birthday']
+    @birthday = Time.new(attributes['birthday'])
     @doctor_id = attributes['doctor_id']
   end
 
   def ==(another_patient)
-    self.name == another_patient.name
+    self.name == another_patient.name && self.birthday == another_patient.birthday
   end
 
   def save
