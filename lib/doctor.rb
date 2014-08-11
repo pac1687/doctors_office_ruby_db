@@ -28,8 +28,9 @@ class Doctor
   end
 
   def assign_specialty(doctor_id, specialty_id)
-    results = DB.exec("UPDATE doctors SET specialty_id = #{specialty_id} WHERE id = #{doctor_id} RETURNING specialty_id;")
+    results = DB.exec("UPDATE doctors SET specialty_id = #{specialty_id} WHERE id = #{doctor_id};")
     @specialty_id = results.first['specialty_id'].to_i
+    @name = results.first['name']
   end
 
   def assign_insurance(doctor_id, insurance_id)
@@ -52,6 +53,12 @@ class Doctor
   def self.search_doctor(name)
     results = DB.exec("SELECT * FROM doctors WHERE name = '#{name}';")
     @id = results.first['id'].to_i
+    doctors = []
+    results.each do |result|
+      new_doctor = Doctor.new(result)
+      doctors << new_doctor
+    end
+    doctors
   end
 
   def self.update(name, id)
