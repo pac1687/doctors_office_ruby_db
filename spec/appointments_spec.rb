@@ -39,7 +39,7 @@ describe Appointment do
     date1 = "2000-01-01"
     date2 = "2000-01-02"
     search_result = Doctor.search_doctor(test_search)
-    sum = Appointment.bill(search_result, date1, date2)
+    sum = Appointment.bill(search_result.first.id, date1, date2)
     expect(sum).to eq 8000
   end
 end

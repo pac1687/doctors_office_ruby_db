@@ -18,7 +18,6 @@ describe Doctor do
     test_doctor.save
     test_specialty = Specialty.new({'name' => "gynecologist"})
     test_specialty.save
-        binding.pry
     test_doctor.assign_specialty(test_doctor.id, test_specialty.id)
 
     expect(test_doctor.specialty_id).to eq test_specialty.id
@@ -64,7 +63,7 @@ describe Doctor do
     test_search = "Dr. Who"
     test_update = "Dr. What"
     search = Doctor.search_doctor(test_search)
-    result = Doctor.update(test_update, search.id)
+    result = Doctor.update(test_update, search.first.id)
     expect(Doctor.all.first.name).to eq "Dr. What"
   end
 
@@ -77,7 +76,7 @@ describe Doctor do
     test_patient1.save
     test_search = "Dr. Who"
     search = Doctor.search_doctor(test_search)
-    result = Doctor.patient_count(search)
+    result = Doctor.patient_count(search.first.id)
     expect(result).to eq 2
   end
 end

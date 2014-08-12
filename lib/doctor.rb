@@ -28,14 +28,14 @@ class Doctor
   end
 
   def assign_specialty(doctor_id, specialty_id)
-    results = DB.exec("UPDATE doctors SET specialty_id = #{specialty_id} WHERE id = #{doctor_id};")
-    @specialty_id = results.first['specialty_id'].to_i
-    @name = results.first['name']
+    DB.exec("UPDATE doctors SET specialty_id = #{specialty_id} WHERE id = #{doctor_id};")
+    @specialty_id = specialty_id
+    @name = name
   end
 
   def assign_insurance(doctor_id, insurance_id)
-    results = DB.exec("UPDATE doctors SET insurance_id = #{insurance_id} WHERE id =#{doctor_id} RETURNING insurance_id;")
-    @insurance_id = results.first['insurance_id'].to_i
+    results = DB.exec("UPDATE doctors SET insurance_id = #{insurance_id} WHERE id =#{doctor_id}")
+    @insurance_id = insurance_id
   end
 
   def self.list_doctors_by_specialty(name)
